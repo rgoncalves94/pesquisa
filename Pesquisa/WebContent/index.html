@@ -28,9 +28,9 @@
 	<div class="row">
 	<input type="text" placeholder="Alternativa" ng-model="alternativa.afirmacao">
 	<input type="checkbox" ng-model="alternativa.estaCorreta">correta?</input>
-	<button class="btn btn-success" ng-click="incluiAlternativa(alternativa)">incluir alternativa</button>
-	<button class="btn btn-success" ng-click="incluiQuestao(questao)">incluir questao</button>
-	<button class="btn btn-success" ng-click="salvar(questionario)">salvar</button>
+	<button class="btn btn-success" ng-click="incluiAlternativa(questao, alternativa)">incluir alternativa</button>
+	<button class="btn btn-success" ng-click="incluiQuestao(questionario, questao)">incluir questao</button>
+	<button class="btn btn-success" ng-click="salvar(questionario)">incluir questao</button>
 	</div>
 	<div ng-repeat="alternativa in questao.alternativas" class="row">
 		- {{alternativa.afirmacao}}
@@ -40,6 +40,7 @@
 		- {{questao.pergunta}}
 	</div>
 	{{questionario}}
+	
 
 </body>
 </html>

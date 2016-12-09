@@ -91,9 +91,10 @@ public class QuestionarioDAO {
 			
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				q = new Questionario();
+				Questionario q = new Questionario();
 				q.setId(rs.getLong("PESQUISA_ID"));
 				q.setDescricao(rs.getString("PESQUISA_NOME"));
+				qs.add(q);
 			}
 
 		} catch (SQLException e) {
@@ -101,7 +102,7 @@ public class QuestionarioDAO {
 			e.printStackTrace();
 		}
 		
-		return q;
+		return qs;
 	}
 	public List<Questionario> selectByNome(String nome){
 		return new ArrayList<Questionario>();

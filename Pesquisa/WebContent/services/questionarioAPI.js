@@ -1,4 +1,5 @@
 angular.module("questionario").factory("questionarioAPI", function ($http, config){
+	
 	var _getCategorias = function(){
 		return $http.get(config.baseURL + "/CategoriaControl.do");
 	};
@@ -12,8 +13,9 @@ angular.module("questionario").factory("questionarioAPI", function ($http, confi
 		return $http.get(config.baseURL + "/LivroControl.do");
 	};
 	
-	var _setQuestionario = function(livro){
-		return $http.post(config.baseURL + "/QuestionarioControl.do", livro);
+	
+	var _setQuestionario = function(questionario){
+		return $http.post(config.baseURL + "/QuestionarioControl.do", questionario);
 	};
 	return {
 		getCategorias : _getCategorias,

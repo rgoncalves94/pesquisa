@@ -1,32 +1,37 @@
 angular.module("questionario").controller("questionarioCTRL", function($scope, questionarioAPI){
-	$scope.questionario = [];
-	$scope.questionario.questoes = [];
-	$scope.questao = [];
-	$scope.questao.alternativas = [];
-	$scope.alternativa = [];
 	
 	
-	$scope.incluiAlternativa = function(alternativa){
-		$scope.questao.alternativas.push(alternativa);
-		$scope.alternativa = [];
-		
+	$scope.incluiAlternativa = function(questao, alternativa){
+		console.log(questao.alternativas)
+		if (questao.alternativas == undefined){
+			console.log("definido")
+			var aux = [];
+			aux.push(alternativa);
+			console.log(questao , alternativa)
+			questao.alternativas = aux;			
+		}else{
+			console.log("indefinido")
+			questao.alternativas.push(alternativa);
+		}
+		delete alternativa;
 	}
 	
-	$scope.incluiQuestao = function(questao){
-		$scope.questionario.questoes.push(questao);
-		$scope.questao = [];
-		$scope.questao.alternativas = [];
-		$scope.alternativa = [];
-		console.log($scope.questionario)
+	$scope.incluiQuestao = function(questionario, questao){
+		if(questionario.questoes == undefined){
+			var aux = [];
+			aux.push(questao);
+			questionario.questoes = aux;
+		}else{
+			questionario.questoes.push(questao);
+		}
+		delete questao;
 	}
 	
 	$scope.salvar = function(_questionario){
 		questionarioAPI.setQuestionario(_questionario).success(function(data, status){
-			$scope.questionario = [];
+			console.log($scope.questionario)
 			$scope.questionario.questoes = [];
-			$scope.questao = [];
 			$scope.questao.alternativas = [];
-			$scope.alternativa = [];
 		}).error(function(data,status){
 		});
 	};
