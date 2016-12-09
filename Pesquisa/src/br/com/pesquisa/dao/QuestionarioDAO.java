@@ -21,15 +21,16 @@ public class QuestionarioDAO {
 		try {
 			conn = DBConnection.getConnection();
 			
-			String sql = "INSERT INTO PESQUISAS (PESQUISA_ID, PESQUISA_NOME, PESQUISA_ATIVO, USUARIO_ID) VALUES (SEQ_PESQUISAS.nextval, ?, 1, 1);";
-		
+			//String sql = "INSERT INTO PESQUISAS (PESQUISA_ID, PESQUISA_NOME, PESQUISA_ATIVO, USUARIO_ID) VALUES (SEQ_PESQUISAS.nextval, ?, 1, 1); commit;";
+			
+			String sql = "begin  persistePesquisa(?, ?); end;";
 		
 			PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-				
-			stmt.setString(1 , questionario.getDescricao());
+			
+			stmt.setLong(1 , questionario.getId());
+			stmt.setString(2 , questionario.getDescricao());
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -38,7 +39,7 @@ public class QuestionarioDAO {
 		try {
 			conn = DBConnection.getConnection();
 			
-			String sql = "DELETE FROM PESQUISAS WHERE DELETE FROM PESQUISAS WHERE PESQUISA_ID = ?;";
+			String sql = "DELETE FROM PESQUISAS WHERE PESQUISA_ID = ?;";
 		
 		
 			PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -90,21 +91,49 @@ public class QuestionarioDAO {
 				
 			
 			ResultSet rs = stmt.executeQuery();
+			qs = new ArrayList<Questionario>();
 			while (rs.next()) {
 				Questionario q = new Questionario();
 				q.setId(rs.getLong("PESQUISA_ID"));
 				q.setDescricao(rs.getString("PESQUISA_NOME"));
+				
 				qs.add(q);
 			}
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return qs;
 	}
+	
 	public List<Questionario> selectByNome(String nome){
-		return new ArrayList<Questionario>();
+		List<Questionario> qs = null;
+		try {
+			conn = DBConnection.getConnection();
+			
+			String sql = "SELECT PESQUISA_ID, PESQUISA_NOME, PESQUISA_ATIVO, USUARIO_ID FROM PESQUISAS where PESQUISA_NOME like ? ;";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+				
+			stmt.setString(1, "%" + nome + "%");
+			
+			ResultSet rs = stmt.executeQuery();
+			qs = new ArrayList<Questionario>();
+			while (rs.next()) {
+				Questionario q = new Questionario();
+				q.setId(rs.getLong("PESQUISA_ID"));
+				q.setDescricao(rs.getString("PESQUISA_NOME"));
+				
+				qs.add(q);
+			}
+			
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return qs;
 	}
 }
