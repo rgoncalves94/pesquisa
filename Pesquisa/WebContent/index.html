@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="questionario">
+<head>
+	<meta charset="utf-8">
+	<title>Questionario</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<script src="lib/angular/angular.js"></script>
+  	<script src="js/app.js"></script>
+  	<script src="js/controllers/questionarioControl.js"></script>
+  	<script src="value/configValue.js"></script>
+  	<script src="services/questionarioAPI.js"></script>
+	
+</head>
+<body class="container" ng-controller="questionarioCTRL">
+	<h3>incluir questionario</h3>
+	<div class="row">
+	<input type="text" placeholder="nome" ng-model="questionario.nome">
+	</div>
+	<div class="row">
+	<input type="text" placeholder="Descrição" ng-model="questionario.descricao">
+	</div>
+	<hr>
+	<div class="row">
+	<input type="text" placeholder="Questão" ng-model="questao.pergunta">
+	</div>
+	<div class="row">
+	<input type="text" placeholder="Alternativa" ng-model="alternativa.afirmacao">
+	<input type="checkbox" ng-model="alternativa.estaCorreta">correta?</input>
+	<button class="btn btn-success" ng-click="incluiAlternativa(alternativa)">incluir alternativa</button>
+	<button class="btn btn-success" ng-click="incluiQuestao(questao)">incluir questao</button>
+	<button class="btn btn-success" ng-click="salvar(questionario)">salvar</button>
+	</div>
+	<div ng-repeat="alternativa in questao.alternativas" class="row">
+		- {{alternativa.afirmacao}}
+	</div>
+	<hr>
+	<div ng-repeat="questao in questionario.questoes" class="row">
+		- {{questao.pergunta}}
+	</div>
+	{{questionario}}
+
+</body>
+</html>
